@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ImageInary/static/css/main.26336f22.css",
+    "main.js": "/ImageInary/static/js/main.2761ee46.js",
+    "index.html": "/ImageInary/index.html",
+    "main.26336f22.css.map": "/ImageInary/static/css/main.26336f22.css.map",
+    "main.2761ee46.js.map": "/ImageInary/static/js/main.2761ee46.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.26336f22.css",
+    "static/js/main.2761ee46.js"
+  ]
+}
