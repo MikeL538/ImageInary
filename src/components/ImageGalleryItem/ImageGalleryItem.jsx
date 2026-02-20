@@ -12,7 +12,7 @@ export default function ImageGalleryItem({ searchTerm, page }) {
   const fetchImageData = () => {
     axios
       .get(
-        `https://pixabay.com/api/?q=${searchTerm}&page=${page}&key=${ApiKey}&image_type=photo&orientation=horizontal&per_page=12`
+        `https://pixabay.com/api/?q=${searchTerm}&page=${page}&key=${ApiKey}&image_type=photo&orientation=horizontal&per_page=20`
       )
       .then(response => {
         setImages(prevImages => {

@@ -1,3 +1,5 @@
-#Goit React 03 Image Finder
+#ImageInary
 
-https://mikel538.github.io/goit-react-hw-03-image-finder/
+## In work
+
+Refactored and updated with new features and much more of an old project

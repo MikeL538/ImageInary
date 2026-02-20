@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
-
 import css from './App.module.scss';
 
 export const App = () => {

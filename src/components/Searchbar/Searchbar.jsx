@@ -17,7 +17,8 @@ export default function Searchbar({ onSearch }) {
   }
 
   return (
-    <header>
+    <header className={css.header}>
+      <h1 className={css.title}>ImageInary</h1>
       <form className={css.form} onSubmit={search}>
         <input
           type="text"
@@ -30,6 +31,13 @@ export default function Searchbar({ onSearch }) {
           Search
         </button>
       </form>
+      <div>
+        <p>Powered by</p>
+        <img
+          src="https://pixabay.com/static/img/pixabay-logo.svg"
+          alt="pixabay"
+        />
+      </div>
     </header>
   );
 }
