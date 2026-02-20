@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { useState, useEffect } from 'react';
-import Searchbar from './Searchbar/Searchbar';
+import Header from './Header/Header';
 import ImageGallery from './ImageGallery/ImageGallery';
 import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
 // import hasmore
@@ -34,7 +34,7 @@ export const App = () => {
 
   return (
     <>
-      <Searchbar onSearch={handleSearch} />
+      <Header onSearch={handleSearch} />
       <ImageGallery searchTerm={searchTerm} page={page} />
       <LoadMoreButton onLoadMore={handleLoadMore} />
     </>
