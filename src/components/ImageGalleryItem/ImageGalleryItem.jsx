@@ -8,6 +8,7 @@ export default function ImageGalleryItem({ searchTerm, page }) {
   const ApiKey = '38531038-07b18ea2bd70e8e8bef0f3931';
   const [images, setImages] = useState([]);
   const [siteLoaded, setSiteLoaded] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchImageData = () => {
     axios
@@ -15,6 +16,12 @@ export default function ImageGalleryItem({ searchTerm, page }) {
         `https://pixabay.com/api/?q=${searchTerm}&page=${page}&key=${ApiKey}&image_type=photo&orientation=horizontal&per_page=20`
       )
       .then(response => {
+        const newImages = response.data.hits;
+
+        if (newImages.length < 20 && hasMore === false) {
+          setHasMore(false);
+          alert('No more images'); // tymczasowo
+        }
         setImages(prevImages => {
           // Prevent double images load from page 1 after website loads
           if (!siteLoaded) {
@@ -22,6 +29,7 @@ export default function ImageGalleryItem({ searchTerm, page }) {
             return [...response.data.hits];
           }
           // If loaded and Load More button clicked
+          // console.log(response.data);
           return [...prevImages, ...response.data.hits];
         });
       })
@@ -34,6 +42,7 @@ export default function ImageGalleryItem({ searchTerm, page }) {
     if (searchTerm && page === 1) {
       // Clear the images only when a new search is performed
       setImages([]);
+      setHasMore(true);
     }
 
     fetchImageData();

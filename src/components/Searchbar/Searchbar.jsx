@@ -31,8 +31,8 @@ export default function Searchbar({ onSearch }) {
           Search
         </button>
       </form>
-      <div>
-        <p>Powered by</p>
+      <div className={css.copyrights}>
+        <p>Powered by </p>
         <img
           src="https://pixabay.com/static/img/pixabay-logo.svg"
           alt="pixabay"
