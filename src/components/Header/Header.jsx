@@ -1,9 +1,11 @@
 /* eslint-disable */
 import { useState } from 'react';
+import ContactModal from 'components/ContactModal/ContactModal';
 import css from './Header.module.scss';
 
 export default function Header({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   function search(e) {
     e.preventDefault();
@@ -24,7 +26,7 @@ export default function Header({ onSearch }) {
             window.scrollTo(0, 0);
             window.location.reload();
           }}
-          className={css.logoContainer}
+          className={css.logoContainerButton}
           type="button"
         >
           <svg className={css.logo}>
@@ -32,15 +34,6 @@ export default function Header({ onSearch }) {
           </svg>
           <h1 className={css.title}>ImageInary</h1>
         </button>
-
-        <a
-          className={css.logo__contact}
-          href="https://github.com/MikeL538"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Contact
-        </a>
       </div>
       <form className={css.form} onSubmit={search}>
         <input
@@ -55,6 +48,20 @@ export default function Header({ onSearch }) {
         </button>
       </form>
       <div className={css.copyrights}>
+        <button
+          className={css.copyrights__contact}
+          onClick={() => {
+            setIsContactOpen(true);
+            document.querySelector('body').style.overflow = 'hidden';
+          }}
+        >
+          Contact
+        </button>
+
+        <ContactModal
+          isOpen={isContactOpen}
+          onClose={() => setIsContactOpen(false)}
+        />
         <p>Powered by</p>
         <svg className={css.copyrights__icon}>
           <use href={`${process.env.PUBLIC_URL}/icons.svg#pixabay`} />
