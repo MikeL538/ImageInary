@@ -1,8 +1,6 @@
-/* eslint-disable */
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'components/Modal/Modal';
-import Spinner from 'components/Loader/Loader';
 
 export default function ImageGalleryItem({ searchTerm, page }) {
   const ApiKey = '38531038-07b18ea2bd70e8e8bef0f3931';
@@ -18,9 +16,13 @@ export default function ImageGalleryItem({ searchTerm, page }) {
       .then(response => {
         const newImages = response.data.hits;
 
-        if (newImages.length < 20 && hasMore === true) {
+        if (newImages.length < 20 && hasMore === true && page > 1) {
           setHasMore(false);
           alert('No more images'); // tymczasowo
+        }
+
+        if (newImages.length === 0) {
+          return alert('No images found');
         }
         setImages(prevImages => {
           // Prevent double images load from page 1 after website loads
@@ -28,7 +30,7 @@ export default function ImageGalleryItem({ searchTerm, page }) {
             setSiteLoaded(true);
             return [...response.data.hits];
           }
-          // If loaded and Load More button clicked
+          // If loaded and Scrolled OR Load More button clicked
           // console.log(response.data);
           return [...prevImages, ...response.data.hits];
         });
@@ -56,18 +58,17 @@ export default function ImageGalleryItem({ searchTerm, page }) {
 
   return (
     <>
-      {images.length === 0 && <Spinner />}
-
       {images.map(img => (
         <li key={img.id}>
-          <a
+          <button
+            type="button"
             onClick={() => {
               handleImageClick(img.largeImageURL);
               document.querySelector('body').style.overflow = 'hidden';
             }}
           >
             <img src={img.webformatURL} alt={img.tags} loading="lazy" />
-          </a>
+          </button>
           <div>
             <p>
               <b>Likes</b> {img.likes}

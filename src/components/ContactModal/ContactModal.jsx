@@ -6,8 +6,10 @@ export default function ContactModal({ isOpen, onClose }) {
     if (!isOpen) return;
 
     const handleKeyDown = e => {
-      if (e.key === 'Escape') onClose();
-      document.querySelector('body').style.overflow = 'auto';
+      if (e.key === 'Escape') {
+        onClose();
+        document.querySelector('body').style.overflow = 'auto';
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);

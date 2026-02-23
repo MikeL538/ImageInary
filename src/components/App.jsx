@@ -1,10 +1,7 @@
-/* eslint-disable */
 import { useState, useEffect } from 'react';
 import Header from './Header/Header';
 import ImageGallery from './ImageGallery/ImageGallery';
 import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
-
-// import hasmore
 import css from './App.module.scss';
 
 export const App = () => {

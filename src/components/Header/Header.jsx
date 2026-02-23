@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useState } from 'react';
 import ContactModal from 'components/ContactModal/ContactModal';
 import css from './Header.module.scss';
