@@ -5,6 +5,8 @@ ul {
   justify-content: center;
   list-style: none;
   margin: 60px 10px;
+  max-width: 1640px;
+  margin: 0 auto;
 
   > li {
     background-color: #000;
@@ -14,7 +16,7 @@ ul {
     max-width: 350px;
     padding: 2px;
     transition: 0.2s ease-in-out;
-    width: 30%;
+    width: 100%;
 
     > a > img {
       border-radius: 12px;

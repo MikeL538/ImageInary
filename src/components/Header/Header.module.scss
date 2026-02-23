@@ -1,17 +1,25 @@
 .header {
   background-color: rgb(41, 80, 152);
-  display: flex;
-  justify-content: space-between;
+
   opacity: 0.7;
   padding: 5px 40px;
   position: fixed;
   top: 0;
-  width: 100vw;
+  width: 100%;
   z-index: 1000;
 
   &:hover,
   &:focus-within {
     opacity: 1;
+  }
+
+  &Container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
   }
 }
 

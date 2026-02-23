@@ -7,6 +7,7 @@ export default function Modal({ imageUrl, onClose }) {
     const handleKeyDown = event => {
       if (event.key === 'Escape') {
         onClose();
+        // document.querySelector('body').style.overflow = 'auto';
       }
     };
 

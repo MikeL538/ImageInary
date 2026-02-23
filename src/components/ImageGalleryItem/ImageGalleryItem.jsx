@@ -18,7 +18,7 @@ export default function ImageGalleryItem({ searchTerm, page }) {
       .then(response => {
         const newImages = response.data.hits;
 
-        if (newImages.length < 20 && hasMore === false) {
+        if (newImages.length < 20 && hasMore === true) {
           setHasMore(false);
           alert('No more images'); // tymczasowo
         }
@@ -60,7 +60,12 @@ export default function ImageGalleryItem({ searchTerm, page }) {
 
       {images.map(img => (
         <li key={img.id}>
-          <a onClick={() => handleImageClick(img.largeImageURL)}>
+          <a
+            onClick={() => {
+              handleImageClick(img.largeImageURL);
+              document.querySelector('body').style.overflow = 'hidden';
+            }}
+          >
             <img src={img.webformatURL} alt={img.tags} loading="lazy" />
           </a>
           <div>
@@ -83,7 +88,10 @@ export default function ImageGalleryItem({ searchTerm, page }) {
       {selectedImageUrl && (
         <Modal
           imageUrl={selectedImageUrl}
-          onClose={() => setSelectedImageUrl(null)}
+          onClose={() => {
+            setSelectedImageUrl(null);
+            document.querySelector('body').style.overflow = 'auto';
+          }}
         />
       )}
     </>
