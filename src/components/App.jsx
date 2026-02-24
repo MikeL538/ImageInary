@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Header from './Header/Header';
-import ImageGallery from './ImageGalleryItem/ImageGallery';
+import ImageGallery from './ImageGallery/ImageGallery';
 // import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
-import css from './App.module.scss'; // jest używany jako moduł
+import './App.module.scss'; // jest używany jako moduł
 
 export const App = () => {
   const [searchTerm, setSearchTerm] = useState('galaxy');

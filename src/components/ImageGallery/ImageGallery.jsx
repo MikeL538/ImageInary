@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import fetchPixabayImages from 'api/pixabay';
 import Modal from 'components/Modal/Modal';
 import Spinner from 'components/Loader/Loader';
-import css from './ImageGallery.module.scss';
+import './ImageGallery.module.scss';
 
 export default function ImageGallery({ searchTerm }) {
   const [page, setPage] = useState(1);
