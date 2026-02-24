@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Header from './Header/Header';
 import ImageGallery from './ImageGallery/ImageGallery';
 // import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
