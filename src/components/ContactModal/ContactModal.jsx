@@ -3,11 +3,14 @@ import css from './ContactModal.module.scss';
 
 export default function ContactModal({ isOpen, onClose }) {
   useEffect(() => {
+    // Is it open?
     if (!isOpen) return;
 
+    // Close on escape
     const handleKeyDown = e => {
       if (e.key === 'Escape') {
         onClose();
+        // Enable scroll when modal is closed
         document.querySelector('body').style.overflow = 'auto';
       }
     };
@@ -19,9 +22,11 @@ export default function ContactModal({ isOpen, onClose }) {
   return (
     <div
       className={`${css.modal__backdrop} ${!isOpen ? css.hidden : ''} `}
+      // Close on click
       onClick={e => {
         if (e.target === e.currentTarget) {
           onClose();
+          // Enable scroll when modal is closed
           document.querySelector('body').style.overflow = 'auto';
         }
       }}

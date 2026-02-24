@@ -7,14 +7,9 @@ export default function Header({ onSearch }) {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   function search(e) {
-    e.preventDefault();
-    onSearch(searchTerm);
-  }
-
-  function clearInput() {
-    setTimeout(() => {
-      setSearchTerm('');
-    }, 0);
+    e.preventDefault(); // Prevent page reload
+    onSearch(searchTerm); // Pass search term to parent
+    setSearchTerm(''); // Clear search term
   }
 
   return (
@@ -22,6 +17,7 @@ export default function Header({ onSearch }) {
       <div className={css.headerContainer}>
         <div className={css.logoContainer}>
           <button
+            // When logo clicked, reloadd page and scroll to top
             onClick={() => {
               window.scrollTo(0, 0);
               window.location.reload();
@@ -36,6 +32,7 @@ export default function Header({ onSearch }) {
           </button>
         </div>
         <form className={css.form} onSubmit={search}>
+          {/* Search input */}
           <input
             type="text"
             id="searchInput"
@@ -43,9 +40,7 @@ export default function Header({ onSearch }) {
             placeholder="Search images and photos"
             onChange={e => setSearchTerm(e.target.value)}
           />
-          <button onClick={clearInput} type="submit">
-            Search
-          </button>
+          <button type="submit">Search</button>
         </form>
         <div className={css.copyrights}>
           <button
