@@ -3,6 +3,7 @@ import fetchPixabayImages from 'api/pixabay';
 import Modal from 'components/Modal/Modal';
 import Spinner from 'components/Loader/Loader';
 import './ImageGallery.module.scss';
+import LoadMoreButton from 'components/LoadMoreButton/LoadMoreButton';
 
 export default function ImageGallery({ searchTerm }) {
   const [page, setPage] = useState(1);
@@ -11,6 +12,7 @@ export default function ImageGallery({ searchTerm }) {
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+  const [hasScroll, setHasScroll] = useState();
   const scrollLockRef = useRef(false);
 
   // RESET
@@ -18,6 +20,7 @@ export default function ImageGallery({ searchTerm }) {
     setPage(1);
     setHasMore(true);
     setError(null);
+    setHasScroll(true);
     setImages([]);
   }, [searchTerm]);
 
@@ -53,6 +56,7 @@ export default function ImageGallery({ searchTerm }) {
     setSelectedImageUrl(imageUrl);
   };
 
+  // load images from API on mount and when page changes or search term changes
   useEffect(() => {
     setIsLoading(true);
 
@@ -94,6 +98,18 @@ export default function ImageGallery({ searchTerm }) {
     loadImages();
   }, [searchTerm, page]);
 
+  // Check if document has scroll, if not show load more button
+  useEffect(() => {
+    const checkHasScroll = () => {
+      setHasScroll(document.documentElement.scrollHeight > window.innerHeight);
+    };
+
+    checkHasScroll();
+    window.addEventListener('resize', checkHasScroll);
+
+    return () => window.removeEventListener('resize', checkHasScroll);
+  }, [images, isLoading]);
+
   return (
     <ul>
       {images.map(img => (
@@ -105,7 +121,7 @@ export default function ImageGallery({ searchTerm }) {
             }}
           >
             <img
-              src={img.webformatURL}
+              src={img.previewURL}
               alt={img.tags}
               loading="lazy"
               onError={e => {
@@ -148,6 +164,9 @@ export default function ImageGallery({ searchTerm }) {
       {!hasMore && !isLoading && images.length > 0 && <p>No more images</p>}
 
       {!hasMore && !isLoading && images.length === 0 && <p>No images found</p>}
+      {!hasScroll && hasMore && !isLoading && (
+        <LoadMoreButton onLoadMore={() => setPage(prev => prev + 1)} />
+      )}
     </ul>
   );
 }

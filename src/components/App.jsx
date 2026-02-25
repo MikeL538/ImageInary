@@ -15,7 +15,7 @@ export const App = () => {
     <>
       <Header onSearch={handleSearch} />
       <ImageGallery searchTerm={searchTerm} />
-      {/* <LoadMoreButton onLoadMore={loadNextPage} /> */}
+      {/* <LoadMoreButton /> */}
     </>
   );
 };
