@@ -13,7 +13,7 @@ ul {
     border-radius: 15px;
     border: 1px solid;
 
-    max-width: 350px;
+    max-width: 300px;
     padding: 2px;
     transition: 0.2s ease-in-out;
     width: 100%;
@@ -30,7 +30,7 @@ ul {
       cursor: pointer;
       > img {
         display: flex;
-        height: 277px;
+        height: 247px;
 
         width: 100%;
       }
@@ -45,6 +45,7 @@ ul {
       display: flex;
       gap: 15px;
       margin-top: 3px;
+      padding: 5px;
 
       > p {
         display: flex;

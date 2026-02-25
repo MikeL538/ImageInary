@@ -3,19 +3,21 @@ import css from './Modal.module.scss';
 
 export default function Modal({ imageUrl, onClose }) {
   useEffect(() => {
+    if (!imageUrl) return;
+    document.querySelector('body').style.overflow = 'hidden';
+
     const handleKeyDown = event => {
       if (event.key === 'Escape') {
         onClose();
-        // document.querySelector('body').style.overflow = 'auto';
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
-
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
+      document.querySelector('body').style.overflow = 'auto';
     };
-  }, [onClose]);
+  }, [onClose, imageUrl]);
 
   return (
     <>

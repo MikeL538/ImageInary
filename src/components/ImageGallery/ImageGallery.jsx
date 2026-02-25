@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import fetchPixabayImages from 'api/pixabay';
 import Modal from 'components/Modal/Modal';
 import Spinner from 'components/Loader/Loader';
@@ -11,6 +11,7 @@ export default function ImageGallery({ searchTerm }) {
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+  const scrollLockRef = useRef(false);
 
   // RESET
   useEffect(() => {
@@ -23,22 +24,27 @@ export default function ImageGallery({ searchTerm }) {
   // SCROLL
   useEffect(() => {
     const handleScroll = () => {
-      if (isLoading || !hasMore) return;
+      if (isLoading || !hasMore || scrollLockRef.current) return;
 
       // Check height of document
       const maxScroll =
         document.documentElement.scrollHeight - window.innerHeight;
-      // Check if scroll is at the bottom - 120px
-      if (window.scrollY >= maxScroll - 120) {
+      // Check if scroll is at the bottom - 80px
+      if (window.scrollY >= maxScroll - 80) {
         // Small protection against using infinte scroll two times
-        window.scrollTo(0, maxScroll - 120);
-        setPage(prev => prev + 1);
+        scrollLockRef.current = true;
+        window.scrollTo(0, maxScroll - 80);
+        setTimeout(() => {
+          setPage(prev => prev + 1);
+        }, 200);
       }
     };
     // Add scroll listener
     window.addEventListener('scroll', handleScroll);
+
     // Clean up scroll listener on unmount or when hasMore changes to prevent memory leak
     return () => window.removeEventListener('scroll', handleScroll);
+
     // Depends on isLoading and hasMore
   }, [isLoading, hasMore]);
 
@@ -76,12 +82,12 @@ export default function ImageGallery({ searchTerm }) {
         });
       } catch (error) {
         setError(error);
-        console.log(error);
         if (error?.response?.status === 400) {
           setHasMore(false);
         }
       } finally {
         setIsLoading(false);
+        scrollLockRef.current = false;
       }
     }
 
@@ -96,10 +102,18 @@ export default function ImageGallery({ searchTerm }) {
             type="button"
             onClick={() => {
               handleImageClick(img.largeImageURL);
-              document.querySelector('body').style.overflow = 'hidden';
             }}
           >
-            <img src={img.webformatURL} alt={img.tags} loading="lazy" />
+            <img
+              src={img.webformatURL}
+              alt={img.tags}
+              loading="lazy"
+              onError={e => {
+                e.currentTarget.alt =
+                  'Error while loading image - Click to load image';
+                e.currentTarget.style.padding = '40px';
+              }}
+            />
           </button>
           <div>
             <p>
@@ -124,7 +138,6 @@ export default function ImageGallery({ searchTerm }) {
           imageUrl={selectedImageUrl}
           onClose={() => {
             setSelectedImageUrl(null);
-            document.querySelector('body').style.overflow = 'auto';
           }}
         />
       )}
@@ -132,7 +145,9 @@ export default function ImageGallery({ searchTerm }) {
 
       {error && <p>{error.message}</p>}
 
-      {!hasMore && !isLoading && <p>No more images</p>}
+      {!hasMore && !isLoading && images.length > 0 && <p>No more images</p>}
+
+      {!hasMore && !isLoading && images.length === 0 && <p>No images found</p>}
     </ul>
   );
 }

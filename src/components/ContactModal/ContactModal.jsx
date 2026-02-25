@@ -5,18 +5,20 @@ export default function ContactModal({ isOpen, onClose }) {
   useEffect(() => {
     // Is it open?
     if (!isOpen) return;
+    document.querySelector('body').style.overflow = 'hidden';
 
     // Close on escape
     const handleKeyDown = e => {
       if (e.key === 'Escape') {
         onClose();
-        // Enable scroll when modal is closed
-        document.querySelector('body').style.overflow = 'auto';
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.querySelector('body').style.overflow = 'auto';
+    };
   }, [isOpen, onClose]);
 
   return (
@@ -26,8 +28,6 @@ export default function ContactModal({ isOpen, onClose }) {
       onClick={e => {
         if (e.target === e.currentTarget) {
           onClose();
-          // Enable scroll when modal is closed
-          document.querySelector('body').style.overflow = 'auto';
         }
       }}
     >

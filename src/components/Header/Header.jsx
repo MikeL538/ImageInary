@@ -17,7 +17,7 @@ export default function Header({ onSearch }) {
       <div className={css.headerContainer}>
         <div className={css.logoContainer}>
           <button
-            // When logo clicked, reloadd page and scroll to top
+            // *Sort of antibugger* When logo clicked, reloadd page and scroll to top of page
             onClick={() => {
               window.scrollTo(0, 0);
               window.location.reload();
@@ -47,7 +47,6 @@ export default function Header({ onSearch }) {
             className={css.copyrights__contact}
             onClick={() => {
               setIsContactOpen(true);
-              document.querySelector('body').style.overflow = 'hidden';
             }}
           >
             Contact
