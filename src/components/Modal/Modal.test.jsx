@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 import Modal from './Modal';
 
@@ -17,11 +17,8 @@ describe('Modal', () => {
   test('calls onClose on overlay click', () => {
     const onClose = jest.fn();
 
-    const { container } = render(
-      <Modal imageUrl="test.jpg" onClose={onClose} />
-    );
-
-    const overlay = container.firstChild;
+    render(<Modal imageUrl="test.jpg" onClose={onClose} />);
+    const overlay = screen.getByTestId('image-modal-overlay');
 
     fireEvent.click(overlay);
 

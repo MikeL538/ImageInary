@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import ImageGallery from './ImageGallery';
 import fetchPixabayImages from 'api/pixabay';
 
@@ -43,6 +44,6 @@ describe('ImageGallery', () => {
 
     render(<ImageGallery searchTerm={'galaxy'} />);
 
-    expect(await screen.findByText('API failed'));
+    expect(await screen.findByText('API failed')).toBeInTheDocument();
   });
 });

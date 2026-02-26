@@ -21,7 +21,11 @@ export default function Modal({ imageUrl, onClose }) {
 
   return (
     <>
-      <div className={css.modal} onClick={onClose}>
+      <div
+        data-testid="image-modal-overlay"
+        className={css.modal}
+        onClick={onClose}
+      >
         <img className={css.modalImage} src={imageUrl} alt="" />
       </div>
     </>

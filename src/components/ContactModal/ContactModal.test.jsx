@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import ContactModal from './ContactModal';
 
 describe('ContactModal', () => {
@@ -24,11 +24,9 @@ describe('ContactModal', () => {
   test('calls onClose when backdrop clicked', () => {
     const onClose = jest.fn();
 
-    const { container } = render(
-      <ContactModal isOpen={true} onClose={onClose} />
-    );
-    const backdrop = container.firstChild;
-    const modal = backdrop.firstChild;
+    render(<ContactModal isOpen={true} onClose={onClose} />);
+    const backdrop = screen.getByTestId('contact-modal-backdrop');
+    const modal = screen.getByTestId('contact-modal-content');
 
     fireEvent.click(modal);
     expect(onClose).not.toHaveBeenCalled();

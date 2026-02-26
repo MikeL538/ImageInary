@@ -23,6 +23,7 @@ export default function ContactModal({ isOpen, onClose }) {
 
   return (
     <div
+      data-testid="contact-modal-backdrop"
       className={`${css.modal__backdrop} ${!isOpen ? css.hidden : ''} `}
       // Close on click
       onClick={e => {
@@ -31,7 +32,7 @@ export default function ContactModal({ isOpen, onClose }) {
         }
       }}
     >
-      <div className={css.modal}>
+      <div data-testid="contact-modal-content" className={css.modal}>
         <ul className={css.modal__list}>
           <li className={css.modal__list__item}>
             <a
