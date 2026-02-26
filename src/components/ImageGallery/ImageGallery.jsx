@@ -1,9 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import fetchPixabayImages from 'api/pixabay';
-import Modal from 'components/Modal/Modal';
-import Spinner from 'components/Loader/Loader';
+import ImageGalleryContent from 'components/ImageGalleryContent/ImageGalleryContent';
 import './ImageGallery.module.scss';
-import LoadMoreButton from 'components/LoadMoreButton/LoadMoreButton';
 
 export default function ImageGallery({ searchTerm }) {
   const [page, setPage] = useState(1);
@@ -11,8 +9,7 @@ export default function ImageGallery({ searchTerm }) {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-  const [hasScroll, setHasScroll] = useState();
+  const [hasScroll, setHasScroll] = useState(false);
   const scrollLockRef = useRef(false);
 
   // RESET
@@ -20,7 +17,6 @@ export default function ImageGallery({ searchTerm }) {
     setPage(1);
     setHasMore(true);
     setError(null);
-    setHasScroll(true);
     setImages([]);
   }, [searchTerm]);
 
@@ -50,11 +46,6 @@ export default function ImageGallery({ searchTerm }) {
 
     // Depends on isLoading and hasMore
   }, [isLoading, hasMore]);
-
-  // MODAL select
-  const handleImageClick = imageUrl => {
-    setSelectedImageUrl(imageUrl);
-  };
 
   // load images from API on mount and when page changes or search term changes
   useEffect(() => {
@@ -112,61 +103,14 @@ export default function ImageGallery({ searchTerm }) {
 
   return (
     <ul>
-      {images.map(img => (
-        <li key={img.id} data-id={img.id}>
-          <button
-            type="button"
-            onClick={() => {
-              handleImageClick(img.largeImageURL);
-            }}
-          >
-            <img
-              src={img.previewURL}
-              alt={img.tags}
-              loading="lazy"
-              onError={e => {
-                e.currentTarget.alt =
-                  'Error while loading image - Click to load image';
-                e.currentTarget.style.padding = '40px';
-              }}
-            />
-          </button>
-          <div>
-            <p>
-              <b>Likes</b>
-              {img.likes}
-            </p>
-            <p>
-              <b>Views</b> {img.views}
-            </p>
-            <p>
-              <b>Comments</b> {img.comments}
-            </p>
-            <p>
-              <b>Downloads</b> {img.downloads}
-            </p>
-          </div>
-        </li>
-      ))}
-
-      {selectedImageUrl && (
-        <Modal
-          imageUrl={selectedImageUrl}
-          onClose={() => {
-            setSelectedImageUrl(null);
-          }}
-        />
-      )}
-      {isLoading && <Spinner />}
-
-      {error && <p>{error.message}</p>}
-
-      {!hasMore && !isLoading && images.length > 0 && <p>No more images</p>}
-
-      {!hasMore && !isLoading && images.length === 0 && <p>No images found</p>}
-      {!hasScroll && hasMore && !isLoading && (
-        <LoadMoreButton onLoadMore={() => setPage(prev => prev + 1)} />
-      )}
+      <ImageGalleryContent
+        images={images}
+        isLoading={isLoading}
+        hasMore={hasMore}
+        error={error}
+        hasScroll={hasScroll}
+        setPage={setPage}
+      />
     </ul>
   );
 }
