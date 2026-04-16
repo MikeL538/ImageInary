@@ -4,9 +4,7 @@ ImageInary is a React image search app that uses the Pixabay REST API. It lets
 users search for photos, browse results with infinite scroll, and preview images
 in a modal.
 
-## Live Demo
-
-https://mikel538.github.io/ImageInary/
+Live Demo: https://imageinary.mikeldev.online/
 
 ## Features
 
