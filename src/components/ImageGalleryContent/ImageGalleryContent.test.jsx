@@ -56,8 +56,9 @@ describe('ImageGalleryContent', () => {
     expect(screen.getByText('Loading spinner')).toBeInTheDocument();
   });
   // =====
-  test('renders LoadMoreButton and calls setPage on click when page is not scrollable', () => {
+  test('renders LoadMoreButton and calls setPage on click when page is not scrollable', async () => {
     const setPage = jest.fn();
+    const user = userEvent.setup();
     render(
       <ImageGalleryContent
         {...defaultProps}
@@ -67,12 +68,12 @@ describe('ImageGalleryContent', () => {
     );
 
     const button = screen.getByRole('button', { name: /load more images/i });
-    userEvent.click(button);
+    await user.click(button);
 
     expect(setPage).toHaveBeenCalledTimes(1);
   });
   // =====
-  test('modal is open when image is clicked', () => {
+  test('modal is open when image is clicked', async () => {
     const item = {
       id: 1,
       largeImageURL: 'testLarge.jpg',
@@ -83,14 +84,15 @@ describe('ImageGalleryContent', () => {
       comments: 3,
       downloads: 4,
     };
+    const user = userEvent.setup();
 
     render(<ImageGalleryContent {...defaultProps} images={[item]} />);
 
     const image = screen.getByAltText('test');
-    userEvent.click(image);
+    await user.click(image);
 
     expect(
-      screen.getByText(`Modal open: ${item.largeImageURL}`)
+      await screen.findByText(`Modal open: ${item.largeImageURL}`)
     ).toBeInTheDocument();
   });
 });
